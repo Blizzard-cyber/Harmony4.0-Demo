@@ -32,7 +32,7 @@ class StatInfo {
 
 @Entry
 @Component
-struct PropPage {
+export default struct PropPage {
   // 统计信息
   @Provide stat: StatInfo = new StatInfo()
 

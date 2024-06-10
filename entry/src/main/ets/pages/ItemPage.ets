@@ -69,7 +69,7 @@ import {Header} from '../common/components/CommonComponents'
 
 @Entry
 @Component
-struct ItemPage {
+export default struct ItemPage {
 
    // 商品数据
   private items: Array<Item> = [
@@ -92,7 +92,8 @@ struct ItemPage {
     Column({space: 8}){
       // 标题部分
       Header({title: '商品列表'})
-        .margin({bottom: 20})
+
+
 
       // 商品列表部分
       List({space: 8}){

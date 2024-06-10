@@ -2,12 +2,12 @@ import { Header } from '../common/components/CommonComponents';
 
 @Entry
 @Component
-struct Index {
+export default struct ImagePage {
   @State imageWidth: number = 150
 
   build() {
     Column() {
-      Header({title: '图片案例'})
+      Header({title: '图片查看'})
       Row(){
         Image($r('app.media.icon'))
           .width(this.imageWidth)

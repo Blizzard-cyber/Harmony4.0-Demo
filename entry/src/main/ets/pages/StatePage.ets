@@ -14,7 +14,7 @@ class Person{
 
 @Entry
 @Component
-struct StatePage2 {
+export default  struct StatePage {
   idx: number = 1
   @State p: Person = new Person('Jack', 21, new Person('柔丝', 18))
   @State gfs: Person[] = [
@@ -25,6 +25,7 @@ struct StatePage2 {
   build() {
     Column({space: 10}) {
       Header()
+        .margin({bottom: 20})
 
       Text(`${this.p.name} : ${this.p.age}`)
         .fontSize(50)
@@ -40,7 +41,7 @@ struct StatePage2 {
         })
       Button('添加')
         .onClick(() => {
-          this.gfs.push(new Person('女友' + this.idx++, 20))
+          this.gfs.push(new Person('学生' + this.idx++, 20))
         })
 
       Text('=学生列表=')
@@ -72,23 +73,23 @@ struct StatePage2 {
   }
 }
 
-
-@Component
-struct StatePage {
-  @State name: string = 'Jack'
-  @State age: number = 21
-
-  build() {
-    Column() {
-      Text(`${this.name} : ${this.age}`)
-        .fontSize(50)
-        .fontWeight(FontWeight.Bold)
-        .onClick(() => {
-          this.age++
-        })
-    }
-    .width('100%')
-    .height('100%')
-    .justifyContent(FlexAlign.Center)
-  }
-}
+//
+// @Component
+// struct StatePage {
+//   @State name: string = 'Jack'
+//   @State age: number = 21
+//
+//   build() {
+//     Column() {
+//       Text(`${this.name} : ${this.age}`)
+//         .fontSize(50)
+//         .fontWeight(FontWeight.Bold)
+//         .onClick(() => {
+//           this.age++
+//         })
+//     }
+//     .width('100%')
+//     .height('100%')
+//     .justifyContent(FlexAlign.Center)
+//   }
+//}

@@ -1,79 +1,54 @@
-import RouterInfo from '../viewmodel/RouterInfo'
-import IndexFontSizePanel from '../views/IndexFontSizePanel'
-import RouterItem from '../views/RouterItem'
-import PreferencesUtil from '../common/util/PreferencesUtil'
 
-const routers: RouterInfo[] = [
-  new RouterInfo('pages/ImagePage', '图片查看'),
-  new RouterInfo('pages/ItemPage', '商品列表'),
-  new RouterInfo('pages/StatePage', '学生列表'),
-  new RouterInfo('pages/PropPage', '任务列表'),
-]
+import ImagePage from './ImagePage'
+import ItemPage from './ItemPage'
+import PropPage from './PropPage'
+import StatePage from './StatePage'
+import homePage from './HomePage'
 
 @Entry
 @Component
 struct Index {
-  @State message: string = '页面列表'
-  @State showPanel: boolean = false
-  @Provide fontSize: number = 16
+  @Builder
+  tabBuilder(title:string,img:ResourceStr){
+    Column(){
+      Image(img)
+        .width(30)
+      Text(title)
+    }
 
-  async aboutToAppear(){
-    this.fontSize = await PreferencesUtil.getPreferenceValue('MyPreferences', 'IndexFontSize', 16) as number
   }
+
 
   build() {
-    Column() {
-      // 顶部标题
-      this.Title()
-
-      // 导航列表
-      this.RouterList()
-
-      // 字体修改面板
-      if(this.showPanel){
-        IndexFontSizePanel()
-          .transition({
-            translate: { y: 115 }
-          })
+    Tabs({barPosition:BarPosition.End,index:2}){
+      TabContent(){
+        ImagePage()
       }
+      .tabBar(this.tabBuilder('图片', $r('app.media.ic_gallery_create')))
+
+      TabContent(){
+        ItemPage()
+      }
+      .tabBar(this.tabBuilder('商品', $r('app.media.ic_gallery_discover')))
+
+      TabContent() {
+        homePage()
+      }
+      .tabBar(this.tabBuilder('主页', $r('app.media.ic_public_home')))
+
+      TabContent(){
+        PropPage()
+      }
+      .tabBar(this.tabBuilder('学生', $r('app.media.ic_public_contacts')))
+
+      TabContent(){
+        StatePage()
+      }
+      .tabBar(this.tabBuilder('任务', $r('app.media.ic_public_drawer')))
+
+
     }
-    .width('100%')
-    .height('100%')
+    .scrollable(false)
+    .animationDuration(0)
   }
-
-  @Builder
-  Title() {
-    Row() {
-      Text(this.message)
-        .fontSize(50)
-        .fontWeight(FontWeight.Bold)
-        .height(80)
-      Image($r('app.media.ic_public_settings'))
-        .width(30)
-        .onClick(() => {
-          animateTo({ duration: 500, curve: Curve.EaseOut }, () => this.showPanel = !this.showPanel)
-        })
-    }
-    .justifyContent(FlexAlign.SpaceAround)
-    .width('100%')
-  }
-
-  @Builder
-  RouterList() {
-    List({ space: 35 }) {
-      ForEach(
-        routers,
-        (router, index) => {
-          ListItem() {
-            RouterItem({ r: router, i: index + 1 })
-          }
-        }
-      )
-    }
-    .layoutWeight(1)
-    .alignListItem(ListItemAlign.Center)
-    .width('100%')
-  }
-
-
 }
